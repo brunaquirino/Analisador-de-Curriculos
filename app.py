@@ -14,7 +14,7 @@ option = st.selectbox(
     index=None
 )
 
-data = None
+#Tirei data = none
 
 if option:
     job = database.get_job_by_name(option)
@@ -63,7 +63,7 @@ if option:
         df,
         gridOptions=grid_option,
         enable_enterprise_modules=True,
-        update_mode=GridUpdateMode.COLUMN_CHANGED,
+        update_mode=GridUpdateMode.SELECTION_CHANGED, #mudei de Column_changed para selection_changed
         theme='streamlit'
     )
 
@@ -84,11 +84,11 @@ if option:
         database.delete_all_files_by_job_id(job.get('id'))
 
     if not candidates_df.empty:
-        cols = st.columns(len[candidates_df])
+        cols = st.columns(len(candidates_df)) #tive que mudar as chaves [] para pareteses () após selection_changed
         for idx, row in enumerate(candidates_df.iterrows()):
             with st.container():
                 if resume_data := database.get_resume_by_id(row[1]['CV ID']):
-                    st.markdown(resume_data.get['content'])
+                    st.markdown(resume_data.get('content')) #Mudei de chaves para parenteses também
                     st.markdown(resume_data.get('feedback'))
 
                     with open(resume_data.get('file'), 'rb') as file:
